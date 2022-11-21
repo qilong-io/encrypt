@@ -41,9 +41,19 @@ class AES implements Algorithm {
 
     if (padding != null) {
       return Encrypted(_cipher.process(bytes));
+    } else {
+      Uint8List padBytes = Uint8List.fromList(List.filled(16, 0));
+      if (bytes.length % 16 != 0) {
+        for (int i = 0; i < bytes.length; i++) {
+          padBytes[i] = bytes[i];
+        }
+      } else {
+        for (int i = 0; i < bytes.length; i++) {
+          padBytes[i] = bytes[i];
+        }
+      }
+      return Encrypted(_processBlocks(padBytes));
     }
-
-    return Encrypted(_processBlocks(bytes));
   }
 
   @override
